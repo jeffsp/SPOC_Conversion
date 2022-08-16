@@ -8,7 +8,7 @@ cppcheck:
 	@echo "Running cppcheck..."
 	@cppcheck --std=c++17 --language=c++ --enable=all \
 		-q --error-exitcode=255 \
-		-I . -I apps -I laslib/LASlib/inc \
+		-I . -I spoc -I apps -I laslib/LASlib/inc \
 		--inline-suppr \
 		--suppress=missingIncludeSystem \
 		--suppress='*:laslib/LASlib/inc/*' \
