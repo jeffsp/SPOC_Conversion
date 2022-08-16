@@ -1,3 +1,3 @@
 [submodule "spoc"]
 	path = spoc
-	url = git@gitlab.com:jeffsp/spoc.git
+	url = ../spoc.git
