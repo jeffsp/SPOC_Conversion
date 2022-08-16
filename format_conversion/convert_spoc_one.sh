@@ -5,7 +5,7 @@
 # Get filename parts
 fn=$(basename $1)
 dn=$(dirname $1)
-sn=${fn%.*}
+sn=$(basename ${dn})
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 repodir=$(dirname $SCRIPTPATH)
 echo converting ${sn}...
@@ -28,5 +28,5 @@ trap cleanup EXIT
 las2las -set_ogc_wkt -i $1 -o ${TMPDIR}/tmp.las
 
 # Convert to spoc
-${repodir}/build/release/las2spoc -v ${TMPDIR}/tmp.las $2/${sn}.spoc
-${repodir}/build/release/spoc_compress -v $2/${sn}.spoc $2/${sn}.spoz
+las2spoc -v ${TMPDIR}/tmp.las $2/${sn}.spoc
+spoc_compress -v $2/${sn}.spoc $2/${sn}.zpoc

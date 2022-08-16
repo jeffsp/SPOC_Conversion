@@ -5,7 +5,7 @@
 # Get filename parts
 fn=$(basename $1)
 dn=$(dirname $1)
-sn=${fn%.*}
+sn=$(basename ${dn})
 echo converting ${sn}...
 
 # Convert to las
