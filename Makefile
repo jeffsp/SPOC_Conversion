@@ -69,7 +69,6 @@ clean:
 # Tests
 #
 ################################################################
-	@parallel --jobs 24 --halt now,fail=1 "echo {} && {}" ::: build/$(BUILD)/test_*
 .PHONY: unit_and_app_test
 unit_and_app_test: BUILD=debug
 unit_and_app_test:
