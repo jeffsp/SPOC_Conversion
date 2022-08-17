@@ -1,5 +1,6 @@
 #include "spoc/app_utils.h"
 #include "spoc/spoc.h"
+#include "spoc_conversion/spoc_conversion.h"
 #include "las2spoc.h"
 #include "las2spoc_cmd.h"
 #include <iostream>
@@ -10,12 +11,10 @@ int main (int argc, char **argv)
 {
     using namespace std;
     using namespace spoc::app_utils;
-    using namespace spoc::file;
     using namespace spoc::header;
-    using namespace spoc::io;
-    using namespace spoc::las2spoc_app;
     using namespace spoc::las2spoc_cmd;
     using namespace spoc::point_record;
+    using namespace spoc_conversion;
 
     try
     {
@@ -48,33 +47,16 @@ int main (int argc, char **argv)
 
         // Check the coordinate system
         if (l.lasreader->header.vlr_geo_ogc_wkt == nullptr)
-        {
-            clog << "WARNING: The LAS file's spatial coordinate system is either missing, ";
-            clog << "or it is not specified in OGC WKT format." << endl;
-            clog << "This application can only process spatial coordinate systems if they are specified in OGC WKT format." << endl;
-            clog << "To convert the LAS file's spatial coordinate system to OGC WKT format, you can use LAStools." << endl;
-            clog << "For example, you can use the LAStools 'las2las' command:" << endl;
-            clog << endl;
-            clog << "    las2las -set_ogc_wkt -i input.las -o output.las" << endl;
-            clog << endl;
-            clog << "The output SPOC file's header will not contain a WKT string in the header." << endl;;
-        }
+            clog << OGC_WKT_WARNING;
         else
-        {
             wkt = string (l.lasreader->header.vlr_geo_ogc_wkt);
-        }
-
-        // Get header fields
-        const size_t extra_fields = 0;
-        const size_t total_points = l.lasreader->npoints;
-        const bool compressed = false;
 
         // Allocate the header
-        header h (wkt, extra_fields, total_points, compressed);
+        header h (wkt, 0, l.lasreader->npoints, false);
 
         if (args.verbose)
         {
-            clog << total_points << " total points" << endl;
+            clog << h.total_points << " total points" << endl;
 
             // Write them to specified file
             clog << "writing " << args.output_fn << endl;
