@@ -1,7 +1,7 @@
 # Fail on error
 set -e
 
-spoc2text --help 2> /dev/null
+./build/debug/spoc2text --help 2> /dev/null
 
 # Create a tmp directory for intermediate files
 TMPDIR=$(mktemp --tmpdir --directory spoc.XXXXXXXX)
@@ -14,5 +14,5 @@ function cleanup {
 # Run cleanup on exit
 trap cleanup EXIT
 
-spoc2text < ./test_data/lidar/juarez50.spoc > ${TMPDIR}/juarez50.txt
-spoc2text < ./test_data/lidar/juarez50.zpoc > ${TMPDIR}/juarez50.txt
+./build/debug/spoc2text < ./test_data/lidar/juarez50.spoc > ${TMPDIR}/juarez50.txt
+./build/debug/spoc2text < ./test_data/lidar/juarez50.zpoc > ${TMPDIR}/juarez50.txt

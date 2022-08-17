@@ -1,7 +1,7 @@
 # Fail on error
 set -e
 
-las2spoc --help 2> /dev/null
+./build/debug/las2spoc --help 2> /dev/null
 
 # Create a tmp directory for intermediate files
 TMPDIR=$(mktemp --tmpdir --directory spoc.XXXXXXXX)
@@ -14,5 +14,5 @@ function cleanup {
 # Run cleanup on exit
 trap cleanup EXIT
 
-las2spoc ./test_data/lidar/juarez50.las ${TMPDIR}/juarez50.spoc
-las2spoc ./test_data/lidar/juarez50.las > ${TMPDIR}/juarez50.spoc
+./build/debug/las2spoc ./test_data/lidar/juarez50.las ${TMPDIR}/juarez50.spoc
+./build/debug/las2spoc ./test_data/lidar/juarez50.las > ${TMPDIR}/juarez50.spoc
