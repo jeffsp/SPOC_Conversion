@@ -16,6 +16,15 @@ set(CMAKE_CXX_FLAGS "-Wall -Werror -Wno-class-memaccess ${CMAKE_CXX_FLAGS} ${Ope
 
 include_directories(${PROJECT_SOURCE_DIR} ./spoc)
 
+macro(add_unit_test name)
+    add_executable(${name} ./tests/unit/${name}.cpp)
+    target_link_libraries(${name} gmp z ${CMAKE_SOURCE_DIR}/laslib/LASlib/lib/liblas.a)
+    target_include_directories(${name} PRIVATE laslib/LASlib/inc)
+    target_include_directories(${name} PRIVATE laslib/LASzip/src)
+endmacro()
+
+add_unit_test(test_spoc_conversion)
+
 macro(add_app_test name)
     add_executable(test_${name} tests/app/test_${name}.cpp)
     target_link_libraries(test_${name} gmp z)
