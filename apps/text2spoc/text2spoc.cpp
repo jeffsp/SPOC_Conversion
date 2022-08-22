@@ -65,7 +65,8 @@ int main (int argc, char **argv)
             clog << "Writing records to stdout" << endl;
         }
 
-        write_spoc_file_uncompressed (cout, spoc_file (wkt, point_records));
+        const bool compressed = false;
+        write_spoc_file_uncompressed (cout, spoc_file (wkt, compressed, point_records));
 
         return 0;
     }

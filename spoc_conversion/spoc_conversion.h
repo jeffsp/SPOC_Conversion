@@ -58,14 +58,10 @@ inline spoc::file::spoc_file read_las_file (const std::string &fn)
     else
         wkt = std::string (l.lasreader->header.vlr_geo_ogc_wkt);
 
-    // Allocate the header
-    header h (wkt, 0, l.lasreader->npoints, false);
-
-    // Get the points
-    point_records prs;
-
     // Read the points
-    for (size_t i = 0; i < h.total_points; ++i)
+    const size_t total_points = l.lasreader->npoints;
+    point_records prs;
+    for (size_t i = 0; i < total_points; ++i)
     {
         if (!l.lasreader->read_point())
             throw std::runtime_error (std::string ("Error reading point record #") + std::to_string (i));
@@ -83,7 +79,8 @@ inline spoc::file::spoc_file read_las_file (const std::string &fn)
         prs.push_back (p);
     }
 
-    return spoc_file (h, prs);
+    const bool compressed = false;
+    return spoc_file (wkt, compressed, prs);
 }
 
 inline spoc::file::spoc_file read_spoc_or_las_file (const std::string &fn)

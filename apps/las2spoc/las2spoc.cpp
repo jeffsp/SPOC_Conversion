@@ -52,7 +52,9 @@ int main (int argc, char **argv)
             wkt = string (l.lasreader->header.vlr_geo_ogc_wkt);
 
         // Allocate the header
-        header h (wkt, 0, l.lasreader->npoints, false);
+        const bool compressed = false;
+        const uint8_t extra_fields = 0;
+        header h (wkt, extra_fields, l.lasreader->npoints, compressed);
 
         if (args.verbose)
         {
