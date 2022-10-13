@@ -1,3 +1,5 @@
-# spoc_conversions
+# SPOC Conversion
 
-Conversion utilities for converting to and from the SPOC file format
+Conversion utilities for converting to and from SPOC files
+
+See the [SPOC file format](https://gitlab.com/jeffsp/spoc).
