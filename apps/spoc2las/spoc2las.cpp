@@ -58,7 +58,7 @@ int main (int argc, char **argv)
 
         // Create the header
         LASheader lasheader;
-        strcpy (lasheader.system_identifier, "SPOC by Zetamon XYZ");
+        strcpy (lasheader.system_identifier, "SPOC by spocfile.xyz");
         strcpy (lasheader.generating_software, "spoc2las");
         const auto now = chrono::system_clock::now ();
         time_t tt = chrono::system_clock::to_time_t(now);
