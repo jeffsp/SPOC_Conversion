@@ -40,7 +40,8 @@ const std::string OGC_WKT_WARNING =
 "    las2las -set_ogc_wkt -i input.las -o output.las\n"
 "\n";
 
-inline spoc::file::spoc_file read_las_file (const std::string &fn)
+inline spoc::file::spoc_file read_las_file (const std::string &fn,
+    const bool read_extra_fields = false)
 {
     using namespace spoc::file;
     using namespace spoc::header;
@@ -76,6 +77,15 @@ inline spoc::file::spoc_file read_las_file (const std::string &fn)
         p.r = l.lasreader->point.rgb[0];
         p.g = l.lasreader->point.rgb[1];
         p.b = l.lasreader->point.rgb[2];
+
+        // If we are reading extra fields, put the return number in
+        // extra[0], and put the scan_angle_rank in extra[1].
+        if (read_extra_fields)
+        {
+            p.extra.resize (2);
+            p.extra[0] = l.lasreader->point.get_return_number();
+            p.extra[1] = l.lasreader->point.get_scan_angle_rank();
+        }
         prs.push_back (p);
     }
 
@@ -83,7 +93,8 @@ inline spoc::file::spoc_file read_las_file (const std::string &fn)
     return spoc_file (wkt, compressed, prs);
 }
 
-inline spoc::file::spoc_file read_spoc_or_las_file (const std::string &fn)
+inline spoc::file::spoc_file read_spoc_or_las_file (const std::string &fn,
+    const bool read_extra_fields = false)
 {
     // Try to open the file
     std::ifstream ifs (fn);
@@ -97,7 +108,7 @@ inline spoc::file::spoc_file read_spoc_or_las_file (const std::string &fn)
 
     // If we got this far, we have failed, so try to read
     // the specified filename as a LAS file instead
-    return read_las_file (fn);
+    return read_las_file (fn, read_extra_fields);
 }
 
 
