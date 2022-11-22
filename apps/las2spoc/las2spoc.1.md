@@ -23,6 +23,9 @@ Convert a LAS format file to a SPOC format file
 \-\-verbose, -v
 :   Set verbose mode ON
 
+\-\-quiet, -q
+:   Set quiet mode ON
+
 \-\-version, -e
 :   Print version information and exit
 
