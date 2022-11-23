@@ -46,9 +46,11 @@ int main (int argc, char **argv)
         string wkt;
 
         // Check the coordinate system
-        if (l.lasreader->header.vlr_geo_ogc_wkt == nullptr
-            && !args.quiet)
-            clog << OGC_WKT_WARNING;
+        if (l.lasreader->header.vlr_geo_ogc_wkt == nullptr)
+        {
+            if (!args.nowarn)
+                clog << OGC_WKT_WARNING;
+        }
         else
             wkt = string (l.lasreader->header.vlr_geo_ogc_wkt);
 
