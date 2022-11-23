@@ -28,18 +28,6 @@ struct las_reader
     LASreader *lasreader;
 };
 
-const std::string OGC_WKT_WARNING =
-"WARNING: The LAS file's spatial coordinate system is either missing,\n"
-"or it is not specified in OGC WKT format. This application can only\n"
-"process spatial coordinate systems if they are specified in OGC WKT\n"
-"format. To convert the LAS file's spatial coordinate system to OGC\n"
-"WKT format, you can use LAStools.\n"
-"\n"
-"For example, you can use the LAStools 'las2las' command:\n"
-"\n"
-"    las2las -set_ogc_wkt -i input.las -o output.las\n"
-"\n";
-
 inline spoc::file::spoc_file read_las_file (const std::string &fn,
     const bool read_extra_fields = false)
 {
@@ -54,9 +42,7 @@ inline spoc::file::spoc_file read_las_file (const std::string &fn,
     std::string wkt;
 
     // Check the coordinate system
-    if (l.lasreader->header.vlr_geo_ogc_wkt == nullptr)
-        std::clog << OGC_WKT_WARNING << std::endl;
-    else
+    if (l.lasreader->header.vlr_geo_ogc_wkt != nullptr)
         wkt = std::string (l.lasreader->header.vlr_geo_ogc_wkt);
 
     // Read the points

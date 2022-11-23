@@ -7,6 +7,18 @@
 #include <stdexcept>
 #include <string>
 
+const std::string OGC_WKT_WARNING =
+"WARNING: The LAS file's spatial coordinate system is either missing,\n"
+"or it is not specified in OGC WKT format. This application can only\n"
+"process spatial coordinate systems if they are specified in OGC WKT\n"
+"format. To convert the LAS file's spatial coordinate system to OGC\n"
+"WKT format, you can use LAStools.\n"
+"\n"
+"For example, you can use the LAStools 'las2las' command:\n"
+"\n"
+"    las2las -set_ogc_wkt -i input.las -o output.las\n"
+"\n";
+
 int main (int argc, char **argv)
 {
     using namespace std;
