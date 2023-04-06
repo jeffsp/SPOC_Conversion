@@ -86,7 +86,7 @@ inline spoc::file::spoc_file read_spoc_or_las_file (const std::string &fn,
     std::ifstream ifs (fn);
 
     if (!ifs)
-        throw std::runtime_error ("Could not open file for writing");
+        throw std::runtime_error ("Could not open file for reading");
 
     // Try to read the spoc file
     try { return spoc::io::read_spoc_file (ifs); }
