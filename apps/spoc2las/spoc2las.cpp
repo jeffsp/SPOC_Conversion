@@ -65,13 +65,28 @@ int main (int argc, char **argv)
         tm local_tm = *localtime(&tt);
         lasheader.file_creation_day = local_tm.tm_yday;
         lasheader.file_creation_year = local_tm.tm_year + 1900;
-        const double scale_factor = 0.01;
-        lasheader.x_scale_factor = scale_factor;
-        lasheader.y_scale_factor = scale_factor;
-        lasheader.z_scale_factor = scale_factor;
         lasheader.x_offset = e.minp.x;
         lasheader.y_offset = e.minp.y;
         lasheader.z_offset = e.minp.z;
+        
+        // According to the asprs las specification
+        // https://www.asprs.org/wp-content/uploads/2010/12/asprs_las_format_v12.pdf
+        // X, Y, and Z scale factors: The scale factor fields contain a double floating point value that is used
+        // to scale the corresponding X, Y, and Z long values within the point records. The corresponding
+        // X, Y, and Z scale factor must be multiplied by the X, Y, or Z point record value to get the actual
+        // X, Y, or Z coordinate. For example, if the X, Y, and Z coordinates are intended to have two
+        // decimal point values, then each scale factor will contain the number 0.01.
+        //
+        // So we set the scale factor to be as low as we can while maintaining the range we need
+        const double safety_factor = 2.0;
+        const double max_val = 2000000000; // 2e9
+        const double x_rng = e.maxp.x - e.minp.x;
+        const double y_rng = e.maxp.x - e.minp.y;
+        const double z_rng = e.maxp.x - e.minp.z;
+        lasheader.x_scale_factor = safety_factor * x_rng / max_val;
+        lasheader.y_scale_factor = safety_factor * y_rng / max_val;
+        lasheader.z_scale_factor = safety_factor * z_rng / max_val;
+
         lasheader.point_data_format = 2;
         lasheader.point_data_record_length = 26;
 
