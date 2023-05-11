@@ -79,7 +79,7 @@ int main (int argc, char **argv)
         //
         // So we set the scale factor to be as low as we can while maintaining the range we need
         const double safety_factor = 2.0;
-        const double max_val = 2000000000; // 2e9
+        const double max_val = std::numeric_limits<int32_t>().max();
         const double x_rng = e.maxp.x - e.minp.x;
         const double y_rng = e.maxp.x - e.minp.y;
         const double z_rng = e.maxp.x - e.minp.z;
