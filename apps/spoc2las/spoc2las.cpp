@@ -81,8 +81,9 @@ int main (int argc, char **argv)
         const double safety_factor = 2.0;
         const double max_val = std::numeric_limits<int32_t>().max();
         const double x_rng = e.maxp.x - e.minp.x;
-        const double y_rng = e.maxp.x - e.minp.y;
-        const double z_rng = e.maxp.x - e.minp.z;
+        const double y_rng = e.maxp.y - e.minp.y;
+        const double z_rng = e.maxp.z - e.minp.z;
+        const double tmp_test = safety_factor * y_rng / max_val;
         lasheader.x_scale_factor = safety_factor * x_rng / max_val;
         lasheader.y_scale_factor = safety_factor * y_rng / max_val;
         lasheader.z_scale_factor = safety_factor * z_rng / max_val;
