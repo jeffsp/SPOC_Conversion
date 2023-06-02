@@ -12,7 +12,7 @@ void test_spoc2las ()
     LASheader lasheader;
 
     // LASlib will add the extension ".txt" if you don't include one
-    const string fn = generate_tmp_filename () + ".las";
+    const string fn = spoc::test_utils::generate_tmp_filename () + ".las";
 
     // Open the las file for writing
     spoc::spoc2las_app::las_writer w (fn, lasheader);

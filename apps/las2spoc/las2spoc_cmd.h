@@ -16,6 +16,7 @@ struct args
     bool verbose = false;
     bool nowarn = false;
     bool version = false;
+    bool preserve_timestamps = false;
     std::string input_fn;
     std::string output_fn;
 };
@@ -31,10 +32,11 @@ args get_args (int argc, char **argv, const std::string &usage)
             {"verbose", no_argument, 0, 'v'},
             {"nowarn", no_argument, 0, 'w'},
             {"version", no_argument, 0, 'e'},
+            {"preserve-timestamps", no_argument, 0, 't'},
             {0, 0, 0, 0}
         };
 
-        int c = getopt_long(argc, argv, "hvwe", long_options, &option_index);
+        int c = getopt_long(argc, argv, "hvwet", long_options, &option_index);
         if (c == -1)
             break;
 
@@ -53,6 +55,7 @@ args get_args (int argc, char **argv, const std::string &usage)
             case 'v': args.verbose = true; break;
             case 'w': args.nowarn = true; break;
             case 'e': args.version = true; break;
+            case 't': args.preserve_timestamps = true; break;
         }
     }
 

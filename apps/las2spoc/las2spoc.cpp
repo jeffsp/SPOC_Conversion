@@ -3,6 +3,7 @@
 #include "spoc_conversion/spoc_conversion.h"
 #include "las2spoc.h"
 #include "las2spoc_cmd.h"
+#include <bit>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -68,7 +69,7 @@ int main (int argc, char **argv)
 
         // Allocate the header
         const bool compressed = false;
-        const uint8_t extra_fields = 0;
+        const uint8_t extra_fields = args.preserve_timestamps ? 1 : 0;
         header h (wkt, extra_fields, l.lasreader->npoints, compressed);
 
         if (args.verbose)
@@ -101,6 +102,15 @@ int main (int argc, char **argv)
             p.r = l.lasreader->point.rgb[0];
             p.g = l.lasreader->point.rgb[1];
             p.b = l.lasreader->point.rgb[2];
+
+            if (args.preserve_timestamps)
+            {
+                // Place the timestamp into the extra[0] field
+                p.extra.resize (1);
+
+                // Get the time and scale it
+                p.extra[0] = l.lasreader->point.get_gps_time() * 1e9;
+            }
 
             // Write it out
             write_point_record (os (), p);
