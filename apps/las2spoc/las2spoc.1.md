@@ -30,8 +30,8 @@ Convert a LAS format file to a SPOC format file
 :   Print version information and exit
 
 \-\-preserve-timestamps, -t
-:   Preserve LAS time stamps by multiplying the GPS time field by
-    the scalar 1e9 and storing it in the extra[0] field.
+:   Preserve LAS time stamps by bit-casting the GPS time field to an
+    unsigned 64-bit integer and storing it in the extra[0] field.
 
 # SEE ALSO
 

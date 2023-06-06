@@ -108,8 +108,9 @@ int main (int argc, char **argv)
                 // Place the timestamp into the extra[0] field
                 p.extra.resize (1);
 
-                // Get the time and scale it
-                p.extra[0] = l.lasreader->point.get_gps_time() * 1e9;
+                // Get the gps time and bit-cast it to an unsigned integer
+                const double t = l.lasreader->point.get_gps_time();
+                p.extra[0] = std::bit_cast<std::uint64_t> (t);
             }
 
             // Write it out
