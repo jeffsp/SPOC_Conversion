@@ -50,7 +50,7 @@ laslib:
 #
 ################################################################
 .PHONY: build # Compile all applications and tests
-build: ./build/debug/Makefile laslib
+build: laslib ./build/debug/Makefile
 	cd build/debug && make -j 8
 	cd build/release && make -j 8
 
@@ -63,6 +63,7 @@ build: ./build/debug/Makefile laslib
 clean:
 	@echo "Cleaning..."
 	@rm -rf build
+	@$(MAKE) -C laslib/LASlib clean
 
 ################################################################
 #
