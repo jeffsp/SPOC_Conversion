@@ -95,7 +95,12 @@ int main (int argc, char **argv)
             p.x = l.lasreader->point.get_x();
             p.y = l.lasreader->point.get_y();
             p.z = l.lasreader->point.get_z();
-            p.c = l.lasreader->point.get_classification();
+            // Note that based on my understanding of the extended_classification field in the laspoint object,
+            // extended_classification will always be the same as classification if classification is <= 31.
+            // Otherwise, classification will be 0, and extended_classification will be > 31. This is true
+            // even for non-las 1.4 files. Therefore, we don't need to check what kind of file we have, we can
+            // just always reand the extended_classification field.
+            p.c = l.lasreader->point.get_extended_classification();
             p.p = l.lasreader->point.get_point_source_ID();
             p.i = l.lasreader->point.get_intensity();
             p.r = l.lasreader->point.rgb[0];
