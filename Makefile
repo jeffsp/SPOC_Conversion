@@ -25,6 +25,8 @@ cppcheck:
 		-I . -I spoc -I apps -I laslib/LASlib/inc \
 		--inline-suppr \
 		--suppress=missingIncludeSystem \
+		--suppress=unusedFunction \
+		--suppress=useStlAlgorithm \
 		--suppress='*:laslib/LASlib/inc/*' \
 		apps/*/*.cpp
 
