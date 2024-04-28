@@ -9,6 +9,8 @@ using namespace std;
 
 void test_spoc2las ()
 {
+    using namespace spoc::test_utils;
+
     LASheader lasheader;
 
     // LASlib will add the extension ".txt" if you don't include one
