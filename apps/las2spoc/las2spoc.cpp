@@ -95,7 +95,15 @@ int main (int argc, char **argv)
             p.x = l.lasreader->point.get_x();
             p.y = l.lasreader->point.get_y();
             p.z = l.lasreader->point.get_z();
-            p.c = l.lasreader->point.get_classification();
+            // Note that based on my understanding of the extended_classification field in the laspoint object,
+            // extended_classification will always be the same as classification if classification is <= 31.
+            // Otherwise, classification will be 0, and extended_classification will be > 31. However, this
+            // seems to only be true if the is_extended_point_type function returns true, otherwise the
+            // extended_classification is always zero.
+            if (l.lasreader->point.is_extended_point_type())
+                p.c = l.lasreader->point.get_extended_classification();
+            else
+                p.c = l.lasreader->point.get_classification();
             p.p = l.lasreader->point.get_point_source_ID();
             p.i = l.lasreader->point.get_intensity();
             p.r = l.lasreader->point.rgb[0];
